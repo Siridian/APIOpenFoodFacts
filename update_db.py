@@ -4,6 +4,8 @@
 import re
 import os
 
+# -tc- Ce package manque sur github. C'est en général une mauvaise idée de ne pas versionner un fichier de config. 
+# -tc- Utiliser les variables d'environnement pour sortir les données sensibles de ce fichier.
 from local_settings import db_config
 
 import requests
