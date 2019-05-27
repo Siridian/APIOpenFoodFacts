@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-
+# -tc- actuellement, package absent de github
 from local_settings import db_config
 
+# -tc- Pas nécessaire d'importer mysql.connector, car il n'est pas utiliser explicitement dans ce module.
+# -tc- Il est utilisé par records, mais on n'a pas besoin de s'en préoccuper.
 import mysql.connector
 import records
 import os
@@ -38,6 +40,8 @@ class Menu():
             self.proceed(choice)
         else:
             print("Invalid input.")
+            # -tc- Ca peut être dangereux d'utiliser la récursivité ici. L'utilisateur peut
+            # -tc- volontairement faire planter ton programme en donnant une réponse invalide de manière répétée
             self.display()
 
     def proceed(self, choice):
@@ -54,6 +58,7 @@ class MainMenu(Menu):
         self.display()
 
     def proceed(self, choice):
+        # -tc- Pourquoi deux if? Ces conditions étant mutuellement exclusives: if...elif
         if choice == "1":
             currentMenu = CategoryMenu()
         if choice == "2":
@@ -72,6 +77,7 @@ class CategoryMenu(Menu):
         currentMenu = FoodMenu(self.options[int(choice) - 1])
 
 
+# -tc- Dans la mesure du possible, essayer de séparer le code client de l'accès à la base de données
 class FoodMenu(Menu):
 
     def __init__(self, category):
